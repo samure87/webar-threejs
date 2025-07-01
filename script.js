@@ -59,4 +59,17 @@ function init() {
               const results = frame.getHitTestResults(hitTestSource);
               if (results.length > 0) {
                 const pose = results[0].getPose(refSpace);
-                reticle.vi
+                reticle.visible = true;
+                reticle.matrix.fromArray(pose.transform.matrix);
+              } else {
+                reticle.visible = false;
+              }
+            }
+          }
+
+          renderer.render(scene, camera);
+        });
+      });
+    });
+  });
+}
