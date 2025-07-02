@@ -1,7 +1,6 @@
-//import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.153.0/build/three.module.js';
-//import { GLTFLoader } from 'https://cdn.jsdelivr.net/npm/three@0.153.0/examples/jsm/loaders/GLTFLoader.js';
-//import { ARButton } from 'https://cdn.jsdelivr.net/npm/three@0.153.0/examples/jsm/webxr/ARButton.js';
-
+import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.153.0/build/three.module.js';
+import { GLTFLoader } from 'https://cdn.jsdelivr.net/npm/three@0.153.0/examples/jsm/loaders/GLTFLoader.js';
+import { ARButton } from 'https://cdn.jsdelivr.net/npm/three@0.153.0/examples/jsm/webxr/ARButton.js';
 
 let camera, scene, renderer, controller;
 let reticle, model;
@@ -22,7 +21,6 @@ function init() {
   const light = new THREE.HemisphereLight(0xffffff, 0xbbbbff, 1);
   scene.add(light);
 
-  // Retícula
   const geometry = new THREE.RingGeometry(0.1, 0.15, 32).rotateX(-Math.PI / 2);
   const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
   reticle = new THREE.Mesh(geometry, material);
@@ -30,7 +28,6 @@ function init() {
   reticle.visible = false;
   scene.add(reticle);
 
-  // Cargar modelo GLB
   const loader = new GLTFLoader();
   loader.load('modelo.glb', (gltf) => {
     model = gltf.scene;
@@ -51,7 +48,7 @@ function init() {
           }
         });
 
-        renderer.setAnimationLoop((timestamp, frame) => {
+        renderer.setAnimationLoop((_, frame) => {
           if (frame) {
             const viewerPose = frame.getViewerPose(renderer.xr.getReferenceSpace());
             if (viewerPose) {
